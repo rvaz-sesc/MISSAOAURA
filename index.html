@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão ESPACIAL | Exploração 2089</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            color: #f4f2ff;
+            background:
+                radial-gradient(ellipse at top, #29235c 0%, transparent 55%),
+                linear-gradient(135deg, #090b20, #171333, #10182d);
+            padding: 30px 16px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #c9b7ff;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            color: #c8c6e5;
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 8px 14px;
+            border: 1px solid #7867c9;
+            border-radius: 30px;
+            color: #e2d9ff;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .painel {
+            background: rgba(20, 22, 53, 0.92);
+            border: 1px solid #40396e;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 45px #00000040;
+        }
+
+        h2 {
+            color: #d7caff;
+            margin-bottom: 22px;
+        }
+
+        .campo {
+            margin-bottom: 22px;
+        }
+
+        label,
+        legend {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #f0edff;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #57517e;
+            border-radius: 10px;
+            background: #11142e;
+            color: white;
+            font-size: 1rem;
+        }
+
+        input:focus,
+        button:focus-visible {
+            outline: 2px solid #c9b7ff;
+            outline-offset: 3px;
+        }
+
+        fieldset {
+            border: 1px solid #39365f;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            padding: 0 8px;
+            color: #c9b7ff;
+        }
+
+        .opcao {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 9px;
+            background: #1b1d40;
+            cursor: pointer;
+            font-weight: normal;
+            transition: background 0.2s;
+        }
+
+        .opcao:hover {
+            background: #302858;
+        }
+
+        .opcao input {
+            accent-color: #a995ff;
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+        }
+
+        button {
+            border: none;
+            border-radius: 10px;
+            padding: 14px 22px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .botao-principal {
+            width: 100%;
+            color: #15102f;
+            background: linear-gradient(90deg, #c8b4ff, #8de0f7);
+        }
+
+        .mensagem {
+            display: none;
+            margin-top: 18px;
+            padding: 13px;
+            border-radius: 10px;
+            line-height: 1.5;
+            background: #39233e;
+            color: #ffd5e5;
+        }
+
+        .resultado {
+            display: none;
+            margin-top: 28px;
+        }
+
+        .resultado-topo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .resultado-topo p {
+            color: #c8c6e5;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+
+        .cartao-perfil {
+            background: #171936;
+            border: 1px solid #5b508d;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .cartao-perfil img {
+            display: block;
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: #26234c;
+        }
+
+        .perfil-conteudo {
+            padding: 24px;
+        }
+
+        .categoria {
+            display: inline-block;
+            color: #e1d7ff;
+            background: #393064;
+            border-radius: 20px;
+            padding: 7px 12px;
+            font-size: 0.85rem;
+            margin: 12px 0;
+        }
+
+        .perfil-conteudo p {
+            color: #d2d0e9;
+            line-height: 1.7;
+        }
+
+        .empate {
+            padding: 16px;
+            margin-bottom: 20px;
+            background: #302858;
+            border-radius: 12px;
+            line-height: 1.6;
+        }
+
+        .botao-refazer {
+            display: block;
+            margin: 22px auto 0;
+            background: #c9b7ff;
+            color: #15102f;
+            min-width: 150px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #8f8aaf;
+            font-size: 0.85rem;
+        }
+
+        #codigo {
+            margin-top: 10px;
+            letter-spacing: 3px;
+            color: #b9adff;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .logo {
+                font-size: 34px;
+            }
+
+            .painel {
+                padding: 18px;
+                border-radius: 14px;
+            }
+
+            fieldset {
+                padding: 13px;
+            }
+
+            .opcao {
+                font-size: 0.92rem;
+                line-height: 1.4;
+            }
+
+            .cartao-perfil img {
+                height: 210px;
+            }
+
+            .perfil-conteudo {
+                padding: 18px;
+            }
+
+            button {
+                padding: 13px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <header>
+            <div class="logo" aria-hidden="true">✦ 🪐 ✦</div>
+            <h1>MISSÃO ESPACIAL</h1>
+            <p>
+                Ano 2089. Um novo planeta aguarda por exploradores.<br>
+                Descubra qual é o seu perfil nesta missão espacial!
+            </p>
+            <span class="badge">CENTRAL DE EXPLORAÇÃO • 2089</span>
+        </header>
+
+        <section class="painel" id="formulario-painel">
+            <h2>Identificação do explorador</h2>
+
+            <form id="formulario">
+                <div class="campo">
+                    <label for="nome">Nome do participante</label>
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Digite seu nome"
+                        maxlength="80"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="nascimento">Data de nascimento</label>
+                    <input
+                        type="date"
+                        id="nascimento"
+                        name="nascimento"
+                        required
+                    >
+                </div>
+
+                <h2>Questionário de exploração</h2>
+
+                <fieldset>
+                    <legend>1. Qual ferramenta você levaria?</legend>
+
+                    <label class="opcao">
+                        <input type="radio" name="p1" value="1" required>
+                        Um computador quântico para resolver problemas
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p1" value="2">
+                        Um kit de cultivo e análise de plantas
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p1" value="3">
+                        Um laboratório portátil para pesquisas
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p1" value="4">
+                        Um mapa estelar para descobrir novos caminhos
+                    </label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>2. Como você resolveria um imprevisto?</legend>
+
+                    <label class="opcao">
+                        <input type="radio" name="p2" value="1" required>
+                        Analisaria os dados e criaria uma solução
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p2" value="2">
+                        Procuraria uma solução sustentável
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p2" value="3">
+                        Investigaria as causas cientificamente
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p2" value="4">
+                        Exploraria alternativas diferentes
+                    </label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>3. Qual ambiente mais desperta sua curiosidade?</legend>
+
+                    <label class="opcao">
+                        <input type="radio" name="p3" value="1" required>
+                        Uma cidade futurista cheia de tecnologia
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p3" value="2">
+                        Uma floresta alienígena cheia de vida
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p3" value="3">
+                        Uma estação de pesquisa desconhecida
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p3" value="4">
+                        Montanhas e regiões ainda não mapeadas
+                    </label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>4. Qual seria sua principal contribuição?</legend>
+
+                    <label class="opcao">
+                        <input type="radio" name="p4" value="1" required>
+                        Construir sistemas para a equipe
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p4" value="2">
+                        Proteger os ecossistemas do planeta
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p4" value="3">
+                        Descobrir como o planeta funciona
+                    </label>
+
+                    <label class="opcao">
+                        <input type="radio" name="p4" value="4">
+                        Encontrar lugares e rotas desconhecidas
+                    </label>
+                </fieldset>
+
+                <button class="botao-principal" type="submit">
+                    ✦ Descobrir meu perfil
+                </button>
+
+                <p
+                    class="mensagem"
+                    id="mensagem"
+                    role="alert"
+                    aria-live="polite"
+                ></p>
+            </form>
+        </section>
+
+        <section
+            class="painel resultado"
+            id="resultado"
+            aria-live="polite"
+            aria-labelledby="titulo-resultado"
+        >
+            <div class="resultado-topo">
+                <h2 id="titulo-resultado">Relatório da missão</h2>
+                <p id="dados-participante"></p>
+            </div>
+
+            <div id="perfis-encontrados"></div>
+
+            <button
+                type="button"
+                class="botao-refazer"
+                id="refazer"
+            >-refaça-</button>
+        </section>
+
+        <footer>
+            <p>MISSÃO ESPACIAL • Explorando possibilidades desde 2089</p>
+            <p id="codigo">RVAZ</p>
+        </footer>
+    </main>
+
+    <script>
+        const perfis = [
+            {
+                id: 1,
+                nome: "Engenheiro de Sistemas",
+                categoria: "Construção",
+                descricao: "Transforma problemas em soluções. Você gosta de tecnologia, lógica e desafios. Sua missão é construir sistemas e desenvolver ferramentas para ajudar toda a equipe.",
+                img: "perfil-1.jpg"
+            },
+            {
+                id: 2,
+                nome: "Guardião da Natureza",
+                categoria: "Preservação",
+                descricao: "Você valoriza a vida e o equilíbrio ambiental. Sua missão é estudar os ecossistemas alienígenas e encontrar formas de proteger os recursos naturais do planeta.",
+                img: "perfil-2.jpg"
+            },
+            {
+                id: 3,
+                nome: "Cientista Cósmico",
+                categoria: "Pesquisa",
+                descricao: "Sua curiosidade move a exploração. Você observa, investiga e formula hipóteses para compreender os mistérios do universo e revelar os segredos do novo planeta.",
+                img: "perfil-3.jpg"
+            },
+            {
+                id: 4,
+                nome: "Explorador Estelar",
+                categoria: "Descoberta",
+                descricao: "Você tem espírito aventureiro e gosta de descobrir o desconhecido. Sua missão é mapear territórios, encontrar novas rotas e abrir caminhos para futuras expedições.",
+                img: "perfil-4.jpg"
+            }
+        ];
+
+        const formulario = document.getElementById("formulario");
+        const campoNascimento = document.getElementById("nascimento");
+        const mensagem = document.getElementById("mensagem");
+        const painelFormulario =
+            document.getElementById("formulario-painel");
+        const painelResultado = document.getElementById("resultado");
+        const areaPerfis = document.getElementById("perfis-encontrados");
+
+        const hojeISO = () => {
+            const agora = new Date();
+            const ano = agora.getFullYear();
+            const mes = String(agora.getMonth() + 1).padStart(2, "0");
+            const dia = String(agora.getDate()).padStart(2, "0");
+            return `${ano}-${mes}-${dia}`;
+        };
+
+        campoNascimento.max = hojeISO();
+
+        function calcularIdade(dataNascimento) {
+            const hoje = new Date();
+            const nascimento = new Date(
+                dataNascimento + "T00:00:00"
+            );
+
+            let idade =
+                hoje.getFullYear() - nascimento.getFullYear();
+
+            const aindaNaoFezAniversario =
+                hoje.getMonth() < nascimento.getMonth() ||
+                (
+                    hoje.getMonth() === nascimento.getMonth() &&
+                    hoje.getDate() < nascimento.getDate()
+                );
+
+            if (aindaNaoFezAniversario) {
+                idade--;
+            }
+
+            return idade;
+        }
+
+        function mostrarMensagem(texto) {
+            mensagem.textContent = texto;
+            mensagem.style.display = "block";
+        }
+
+        formulario.addEventListener("submit", function(evento) {
+            evento.preventDefault();
+
+            mensagem.style.display = "none";
+
+            const nome = document.getElementById("nome")
+                .value.trim();
+
+            const nascimento = campoNascimento.value;
+
+            if (!nome || !nascimento) {
+                mostrarMensagem(
+                    "Preencha seu nome e sua data de nascimento."
+                );
+                return;
+            }
+
+            const dataInformada = new Date(
+                nascimento + "T00:00:00"
+            );
+
+            if (
+                Number.isNaN(dataInformada.getTime()) ||
+                dataInformada > new Date(hojeISO() + "T00:00:00") ||
+                nascimento > hojeISO()
+            ) {
+                mostrarMensagem(
+                    "Informe uma data de nascimento válida, que não seja futura."
+                );
+                return;
+            }
+
+            const respostas = [];
+
+            for (let i = 1; i <= 4; i++) {
+                const resposta = formulario.querySelector(
+                    `input[name="p${i}"]:checked`
+                );
+
+                if (!resposta) {
+                    mostrarMensagem(
+                        "Responda às quatro perguntas antes de continuar."
+                    );
+                    return;
+                }
+
+                respostas.push(Number(resposta.value));
+            }
+
+            const pontuacao = {
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0
+            };
+
+            respostas.forEach(function(idPerfil) {
+                pontuacao[idPerfil]++;
+            });
+
+            const maiorPontuacao = Math.max(
+                ...Object.values(pontuacao)
+            );
+
+            const perfisEncontrados = perfis.filter(function(perfil) {
+                return pontuacao[perfil.id] === maiorPontuacao;
+            });
+
+            const idade = calcularIdade(nascimento);
+
+            document.getElementById("dados-participante").textContent =
+                `${nome}, ${idade} anos. Relatório da sua expedição:`;
+
+            areaPerfis.replaceChildren();
+
+            if (perfisEncontrados.length > 1) {
+                const aviso = document.createElement("div");
+                aviso.className = "empate";
+                aviso.textContent =
+                    "Você tem um perfil múltiplo! Suas respostas " +
+                    "resultaram em empate. Confira os perfis que " +
+                    "mais combinam com você:";
+                areaPerfis.appendChild(aviso);
+            }
+
+            perfisEncontrados.forEach(function(perfil) {
+                const cartao = document.createElement("article");
+                cartao.className = "cartao-perfil";
+
+                const imagem = document.createElement("img");
+                imagem.src = "Imagens/"+perfil.img;
+                imagem.alt = `Ilustração do perfil ${perfil.nome}`;
+                imagem.loading = "lazy";
+
+                imagem.addEventListener("error", function() {
+                    imagem.alt =
+                        `Imagem pendente: adicione o arquivo ${perfil.imagem}`;
+                    imagem.style.height = "100px";
+                    imagem.style.objectFit = "contain";
+                    imagem.style.padding = "20px";
+                });
+
+                const conteudo = document.createElement("div");
+                conteudo.className = "perfil-conteudo";
+
+                const titulo = document.createElement("h2");
+                titulo.textContent = perfil.nome;
+
+                const categoria = document.createElement("span");
+                categoria.className = "categoria";
+                categoria.textContent = perfil.categoria;
+
+                const descricao = document.createElement("p");
+                descricao.textContent = perfil.descricao;
+
+                const pontos = document.createElement("p");
+                pontos.style.marginTop = "12px";
+                pontos.textContent =
+                    `Pontuação: ${pontuacao[perfil.id]} de 4`;
+
+                conteudo.append(
+                    titulo,
+                    categoria,
+                    descricao,
+                    pontos
+                );
+
+                cartao.append(imagem, conteudo);
+                areaPerfis.appendChild(cartao);
+            });
+
+            painelFormulario.style.display = "none";
+            painelResultado.style.display = "block";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        document.getElementById("refazer").addEventListener(
+            "click",
+            function() {
+                formulario.reset();
+                campoNascimento.max = hojeISO();
+                mensagem.style.display = "none";
+                areaPerfis.replaceChildren();
+
+                painelResultado.style.display = "none";
+                painelFormulario.style.display = "block";
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+                document.getElementById("nome").focus();
+            }
+        );
+    </script>
+</body>
+</html>
